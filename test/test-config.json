@@ -1,0 +1,7 @@
+{
+  "subdomain": "test-subdomain",
+  "auth": {
+    "username": "test-username",
+    "password": "test-password"
+  }
+}

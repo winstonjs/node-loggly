@@ -6,7 +6,9 @@
  *
  */
  
-var path = require('path'),
+var fs = require('fs'),
+    util = require('util'),
+    path = require('path'),
     vows = require('vows'),
     assert = require('assert');
     
@@ -15,6 +17,18 @@ require.paths.unshift(path.join(__dirname, '..', 'lib'));
 var loggly = require('loggly');
 
 var helpers = exports;
+
+helpers.loadConfig = function () {
+  var config = JSON.parse(fs.readFileSync(path.join(__dirname, 'test-config.json')).toString());
+  if (config.subdomain === 'test-subdomain' 
+      || config.auth.username === 'test-username'
+      || config.auth.password === 'test-password') {
+    util.puts('Config file test-config.json must be updated with valid data before running tests');
+    process.exit(0);
+  }
+  
+  return config
+};
 
 helpers.assertInput = function (input) {
   assert.instanceOf(input, loggly.Input);

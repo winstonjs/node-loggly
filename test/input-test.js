@@ -14,13 +14,10 @@ var path = require('path'),
     
 require.paths.unshift(path.join(__dirname, '..', 'lib'));
 
-var loggly = require('loggly');
+var options = {}
 
-loggly.config.subdomain = 'nodejitsu';
-loggly.config.auth = {
-  username: 'nodejitsu',
-  password: 'candymou212'
-};
+var config = helpers.loadConfig(),
+    loggly = require('loggly').createClient(config);
 
 vows.describe('node-loggly/inputs').addBatch({
   "When using the node-loggly client": {
