@@ -40,3 +40,13 @@ helpers.assertInput = function (input) {
   assert.isNotNull(input.discoverTime);
   assert.isNotNull(input.description);
 };
+
+helpers.assertDevice = function (device) {
+  assert.instanceOf(device, loggly.Device);
+  assert.isNotNull(device.id);
+  assert.isNotNull(device.input);
+  assert.isNotNull(device.ipAddress);
+  assert.isNotNull(device.launched);
+  assert.isNotNull(device.resourceUri);
+  
+}
