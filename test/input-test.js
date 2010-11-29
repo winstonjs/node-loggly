@@ -33,4 +33,15 @@ vows.describe('node-loggly/inputs').addBatch({
       }
     }
   }
+}).addBatch({
+  "When using the node-loggly client after creating a device ": {
+    "the log() method": {
+      topic: function () {
+        loggly.log(this.callback);
+      },
+      "should log messages to loggly": function (err, devices) {
+        assert.isTrue(false);
+      }
+    }
+  }
 }).export(module);
