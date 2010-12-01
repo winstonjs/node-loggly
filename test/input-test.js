@@ -23,7 +23,7 @@ vows.describe('node-loggly/inputs').addBatch({
   "When using the node-loggly client": {
     "the getInputs() method": {
       topic: function () {
-        loggly.getInputs(this.callback);
+        loggly.getInputs('test', this.callback);
       },
       "should return a list of valid inputs": function (err, inputs) {
         assert.isNull(err);
@@ -34,13 +34,14 @@ vows.describe('node-loggly/inputs').addBatch({
     }
   }
 }).addBatch({
-  "When using the node-loggly client after creating a device ": {
+  "When using the node-loggly client": {
     "the log() method": {
       topic: function () {
-        loggly.log(this.callback);
+        loggly.log('this is a test logging message from /test/input-test.js', this.callback);
       },
-      "should log messages to loggly": function (err, devices) {
-        assert.isTrue(false);
+      "should log messages to loggly": function (err, result) {
+        assert.equal(result.response, 'success');
+        assert.isObject(result)
       }
     }
   }
