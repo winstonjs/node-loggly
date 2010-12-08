@@ -19,6 +19,7 @@ var options = {}
 var config = helpers.loadConfig(),
     loggly = require('loggly').createClient(config);
 
+
 vows.describe('node-loggly/inputs').addBatch({
   "When using the node-loggly client": {
     "the getInputs() method": {
