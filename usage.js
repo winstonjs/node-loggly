@@ -10,7 +10,11 @@ var config = {
 var loggly = require('./lib/loggly').createClient(config),
     eyes   = require('eyes');
 
+// basic logging without callback (method will "fire and forget")
+loggly.log('this is a test logging message without a callback');
 
-//eyes.inspect(loggly);
-
-loggly.log('this is a test logging message from fooooo');
+// basic logging with callback
+loggly.log('this is a test logging message with a callback', function(err, rsp){
+  eyes.inspect(err);
+  eyes.inspect(rsp);
+});
