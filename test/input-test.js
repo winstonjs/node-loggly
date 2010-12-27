@@ -5,26 +5,24 @@
  * MIT LICENSE
  *
  */
+
+require.paths.unshift(require('path').join(__dirname, '..', 'lib'));
  
 var path = require('path'),
-    eyes = require('eyes'),
     vows = require('vows'),
-    helpers = require('./helpers'),
-    assert = require('assert');
+    assert = require('assert'),
+    helpers = require('./helpers');
     
-require.paths.unshift(path.join(__dirname, '..', 'lib'));
-
-var options = {}
-
-var config = helpers.loadConfig(),
+var options = {},
+    testContext = {},
+    config = helpers.loadConfig(),
     loggly = require('loggly').createClient(config);
-
 
 vows.describe('node-loggly/inputs').addBatch({
   "When using the node-loggly client": {
     "the getInputs() method": {
       topic: function () {
-        loggly.getInputs('test', this.callback);
+        loggly.getInputs(this.callback);
       },
       "should return a list of valid inputs": function (err, inputs) {
         assert.isNull(err);
@@ -32,17 +30,41 @@ vows.describe('node-loggly/inputs').addBatch({
           helpers.assertInput(input);
         });
       }
+    },
+    "the getInput() method": {
+      topic: function () {
+        loggly.getInput('test', this.callback);
+      },
+      "should return a valid inputs": function (err, input) {
+        assert.isNull(err);
+        helpers.assertInput(input);
+        testContext.input = input;
+      }
+    },
+    "the log() method": {
+      topic: function () {
+        loggly.log(
+          config.inputs[0].token,
+          'this is a test logging message from /test/input-test.js', 
+          this.callback);
+      },
+      "should log messages to loggly": function (err, result) {
+        assert.isNull(err);
+        assert.isObject(result);
+        assert.equal(result.response, 'ok');
+      }
     }
   }
 }).addBatch({
-  "When using the node-loggly client": {
+  "When using an instance of an input": {
     "the log() method": {
       topic: function () {
-        loggly.log('this is a test logging message from /test/input-test.js', this.callback);
+        testContext.input.log('this is a test logging message from /test/input-test.js', this.callback)
       },
       "should log messages to loggly": function (err, result) {
-        assert.equal(result.response, 'success');
-        assert.isObject(result)
+        assert.isNull(err);
+        assert.isObject(result);
+        assert.equal(result.response, 'ok');
       }
     }
   }

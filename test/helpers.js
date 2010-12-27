@@ -5,29 +5,37 @@
  * MIT LICENSE
  *
  */
+
+require.paths.unshift(require('path').join(__dirname, '..', 'lib'));
  
 var fs = require('fs'),
     util = require('util'),
     path = require('path'),
     vows = require('vows'),
-    assert = require('assert');
-    
-require.paths.unshift(path.join(__dirname, '..', 'lib'));
-
-var loggly = require('loggly');
+    assert = require('assert'),
+    loggly = require('loggly');
 
 var helpers = exports;
 
 helpers.loadConfig = function () {
-  var config = JSON.parse(fs.readFileSync(path.join(__dirname, 'test-config.json')).toString());
-  if (config.subdomain === 'test-subdomain' 
-      || config.auth.username === 'test-username'
-      || config.auth.password === 'test-password') {
-    util.puts('Config file test-config.json must be updated with valid data before running tests');
+  try {
+    var configFile = path.join(__dirname, 'data', 'test-config.json'),
+        stats = fs.statSync(configFile)
+        config = JSON.parse(fs.readFileSync(configFile).toString());
+    if (config.subdomain === 'test-subdomain' 
+        || config.auth.username === 'test-username'
+        || config.auth.password === 'test-password') {
+      util.puts('Config file test-config.json must be updated with valid data before running tests');
+      process.exit(0);
+    }
+
+    helpers.config = config;
+    return config;
+  }
+  catch (ex) {
+    util.puts('Config file test-config.json must be created with valid data before running tests');
     process.exit(0);
   }
-  
-  return config
 };
 
 helpers.assertInput = function (input) {
@@ -48,5 +56,4 @@ helpers.assertDevice = function (device) {
   assert.isNotNull(device.ipAddress);
   assert.isNotNull(device.launched);
   assert.isNotNull(device.resourceUri);
-  
-}
+};

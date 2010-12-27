@@ -5,18 +5,16 @@
  * MIT LICENSE
  *
  */
+
+require.paths.unshift(require('path').join(__dirname, '..', 'lib'));
  
 var path = require('path'),
-    eyes = require('eyes'),
     vows = require('vows'),
-    helpers = require('./helpers'),
-    assert = require('assert');
-    
-require.paths.unshift(path.join(__dirname, '..', 'lib'));
+    assert = require('assert'),
+    helpers = require('./helpers');
 
-var options = {}
-
-var config = helpers.loadConfig(),
+var options = {},
+    config = helpers.loadConfig(),
     loggly = require('loggly').createClient(config);
 
 vows.describe('node-loggly/devices').addBatch({
@@ -32,9 +30,9 @@ vows.describe('node-loggly/devices').addBatch({
         });
       }
     },
-    "the addDevice() method": {
+    "the addDeviceToInput() method": {
       topic: function () {
-        loggly.addDevice(512, '127.0.0.1', this.callback);
+        loggly.addDeviceToInput(config.inputs[0].id, '127.0.0.1', this.callback);
       },
       "should respond with 200 status code": function (err, res) {
         assert.isNull(err);

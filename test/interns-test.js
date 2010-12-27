@@ -7,7 +7,6 @@
  */
  
 var path = require('path'),
-    eyes = require('eyes'),
     vows = require('vows'),
     assert = require('assert');
     
