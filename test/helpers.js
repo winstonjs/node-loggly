@@ -57,3 +57,11 @@ helpers.assertDevice = function (device) {
   assert.isNotNull(device.launched);
   assert.isNotNull(device.resourceUri);
 };
+
+helpers.assertSearch = function (err, results) {
+  assert.isNull(err);
+  assert.isObject(results);
+  assert.isTrue(typeof results.data !== 'undefined');
+  assert.isTrue(typeof results.numFound !== 'undefined');
+  assert.isTrue(typeof results.context !== 'undefined');
+};

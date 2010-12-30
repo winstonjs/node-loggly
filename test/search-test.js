@@ -25,11 +25,17 @@ vows.describe('node-loggly/inputs').addBatch({
         loggly.search('inputname:test', this.callback);
       },
       "should return a set of valid search results": function (err, results) {
-        assert.isNull(err);
-        assert.isObject(results);
-        assert.isTrue(typeof results.data !== 'undefined');
-        assert.isTrue(typeof results.numFound !== 'undefined');
-        assert.isTrue(typeof results.context !== 'undefined');
+        helpers.assertSearch(err, results);
+      }
+    },
+    "the facet() method": {
+      "when searching by ip": {
+        topic: function () {
+          loggly.facet('ip', 'test', { from: 'NOW-1MONTH' }, this.callback);
+        },
+        "should return a set of valid search results": function (err, results) {
+          helpers.assertSearch(err, results);
+        }
       }
     }
   }
