@@ -131,7 +131,7 @@ Loggly exposes several entities that are available through node-loggly: inputs a
 </pre>
 
 ## Run Tests
-All of the node-loggly tests are written in [vows][7], and cover all of the use cases described above. You will need to add your Loggly username, password, subdomain, and a test input to test/data/test-config.json before running tests:
+All of the node-loggly tests are written in [vows][8], and cover all of the use cases described above. You will need to add your Loggly username, password, subdomain, and a test input to test/data/test-config.json before running tests:
 <pre>
   {
     "subdomain": "your-subdomain",
@@ -146,7 +146,7 @@ All of the node-loggly tests are written in [vows][7], and cover all of the use 
   }
 </pre>
 
-Once you have valid Rackspace credentials you can run tests with [vows][7]:
+Once you have valid Rackspace credentials you can run tests with [vows][8]:
 <pre>
   vows test/*-test.js --spec
 </pre>
