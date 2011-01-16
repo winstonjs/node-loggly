@@ -42,29 +42,55 @@ vows.describe('node-loggly/inputs').addBatch({
       }
     },
     "the log() method": {
-      topic: function () {
-        loggly.log(
-          config.inputs[0].token,
-          'this is a test logging message from /test/input-test.js', 
-          this.callback);
+      "when passed a callback": {
+        topic: function () {
+          loggly.log(
+            config.inputs[0].token,
+            'this is a test logging message from /test/input-test.js', 
+            this.callback);
+        },
+        "should log messages to loggly": function (err, result) {
+          assert.isNull(err);
+          assert.isObject(result);
+          assert.equal(result.response, 'ok');
+        }
       },
-      "should log messages to loggly": function (err, result) {
-        assert.isNull(err);
-        assert.isObject(result);
-        assert.equal(result.response, 'ok');
+      "when not passed a callback": {
+        topic: function () {
+          var emitter = loggly.log(config.inputs[0].token, 'this is a test logging message from /test/input-test.js');
+          emitter.on('log', this.callback.bind(null, null));
+        },
+        "should log messages to loggly": function (err, result) {
+          assert.isNull(err);
+          assert.isObject(result);
+          assert.equal(result.response, 'ok');
+        }
       }
     }
   }
 }).addBatch({
   "When using an instance of an input": {
     "the log() method": {
-      topic: function () {
-        testContext.input.log('this is a test logging message from /test/input-test.js', this.callback)
+      "when passed a callback": {
+        topic: function () {
+          testContext.input.log('this is a test logging message from /test/input-test.js', this.callback)
+        },
+        "should log messages to loggly": function (err, result) {
+          assert.isNull(err);
+          assert.isObject(result);
+          assert.equal(result.response, 'ok');
+        }
       },
-      "should log messages to loggly": function (err, result) {
-        assert.isNull(err);
-        assert.isObject(result);
-        assert.equal(result.response, 'ok');
+      "when not passed a callback": {
+        topic: function () {
+          var emitter = testContext.input.log('this is a test logging message from /test/input-test.js');
+          emitter.on('log', this.callback.bind(null, null));
+        },
+        "should log messages to loggly": function (err, result) {
+          assert.isNull(err);
+          assert.isObject(result);
+          assert.equal(result.response, 'ok');
+        }
       }
     }
   }
