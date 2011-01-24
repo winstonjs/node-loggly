@@ -1,7 +1,7 @@
 {
   "name": "loggly",
   "description": "A client implementation for Loggly cloud Logging-as-a-Service API",
-  "version": "0.1.3",
+  "version": "0.1.4",
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "contributors": [
     { "name": "Marak Squires", "email": "marak.squires@gmail.com" }
@@ -12,7 +12,8 @@
   },
   "keywords": ["cloud computing", "api", "logging", "loggly"],
   "dependencies": {
-    "request": ">= 0.10.0"
+    "pool": ">= 0.4.1",
+    "request": ">= 1.1.1"
   },
   "main": "./lib/loggly",
   "scripts": { "test": "vows test/*-test.js --spec" },
