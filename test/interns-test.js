@@ -14,7 +14,7 @@ require.paths.unshift(path.join(__dirname, '..', 'lib'));
 
 var interns = require('loggly/interns');
 
-vows.describe('node-loggly/loggly/interns').addBatch({
+vows.describe('node-loggly/interns').addBatch({
   "When using the interns module": {
     "the clone() method": {
       topic: function () {

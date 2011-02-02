@@ -85,30 +85,37 @@ will be logged as:
   });
 </pre>
 
-The search() method also takes an optional second parameter specifying options for your search:
+The search() exposes a chainable interface that allows you to set additional search parameters such as: ip, input name, rows, start, end, etc. 
 <pre>
   var util = require('util');
   
-  client.search('404', { rows: 10 }, function (err, results) {
-    // Inspect the result set
-    util.inspect(results.data);
-  });
+  client.search('404')
+        .meta({ ip: '127.0.0.1', inputname: test })
+        .context({ rows: 10 })
+        .run(function (err, results) {
+          // Inspect the result set
+          util.inspect(results.data);
+        });
 </pre>
 
-For more information about search queries in Loggly, check out the [Search Language Guide][4] on the [Loggly Wiki][5]
+The context of the search (set using the `.context()` method) represents additional parameters in the Loggly API besides the search query itself. See the [Search API documentation][9] for a list of all options.
+
+Metadata set using the `.meta()` method is data that is set in the query parameter of your Loggly search, but `:` delimited. For more information about search queries in Loggly, check out the [Search Language Guide][4] on the [Loggly Wiki][5].
 
 ### Facet Searching
 Loggly also exposes searches that can return counts of events over a time range. These are called [facets][6]. The valid facets are 'ip', 'date', and 'input'. Performing a facet search is very similar to a normal search: 
 <pre>
   var util = require('util');
   
-  client.facet('ip', '404', { rows: 10 }, function (err, results) {
-    // Inspect the result set
-    util.inspect(results.data);
-  });
+  client.facet('ip', '404')
+        .context({ rows: 10 })
+        .run(function (err, results) {
+          // Inspect the result set
+          util.inspect(results.data);
+        });
 </pre>
 
-As with the search() method, the options parameter of the facet() method is also optional. 
+The chaining and options for the facet method(s) are the same as the search method above. 
 
 ### Working with Devices and Inputs
 Loggly exposes several entities that are available through node-loggly: inputs and devices. For more information about these terms, checkout the [Loggly Jargon][7] on the wiki. There are several methods available in node-loggly to work with these entities: 
@@ -151,14 +158,15 @@ Once you have valid Rackspace credentials you can run tests with [vows][8]:
   vows test/*-test.js --spec
 </pre>
 
-#### Author: [Charlie Robbins](http://www.charlierobbins.com)
-#### Contributors: [Marak Squires](http://github.com/marak)
+#### Author: [Charlie Robbins](http://www.github.com/indexzero)
+#### Contributors: [Marak Squires](http://github.com/marak), [hij1nx](http://github.com/hij1nx)
 
 [0]: http://wiki.loggly.com/apidocumentation
 [1]: http://wiki.loggly.com/loggingfromcode
-[3]: http://wiki.loggly.com/apidocumentation#search_uri
+[3]: http://wiki.loggly.com/retrieve_events#search_uri
 [4]: http://wiki.loggly.com/searchguide
 [5]: http://wiki.loggly.com/
-[6]: http://wiki.loggly.com/apidocumentation#facet_uris
+[6]: http://wiki.loggly.com/retrieve_events#facet_uris
 [7]: http://wiki.loggly.com/loggingjargon
 [8]: http://vowsjs.org
+[9]: http://wiki.loggly.com/retrieve_events#optional

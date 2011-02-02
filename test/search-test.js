@@ -18,20 +18,42 @@ var options = {},
     config = helpers.loadConfig(),
     loggly = require('loggly').createClient(config);
 
-vows.describe('node-loggly/inputs').addBatch({
+vows.describe('node-loggly/search').addBatch({
   "When using the node-loggly client": {
     "the search() method": {
-      topic: function () {
-        loggly.search('inputname:test', this.callback);
+      "when searching without chaining": {
+        topic: function () {
+          loggly.search('logging message', this.callback);
+        },
+        "should return a set of valid search results": function (err, results) {
+          helpers.assertSearch(err, results);
+        }
       },
-      "should return a set of valid search results": function (err, results) {
-        helpers.assertSearch(err, results);
+      "when searching with chaining": {
+        topic: function () {
+          loggly.search('logging message')
+                .meta({ inputname: 'test' })
+                .run(this.callback);
+        },
+        "should return a set of valid search results": function (err, results) {
+          helpers.assertSearch(err, results);
+        }
       }
     },
     "the facet() method": {
       "when searching by ip": {
         topic: function () {
           loggly.facet('ip', 'test', this.callback);
+        },
+        "should return a set of valid search results": function (err, results) {
+          helpers.assertSearch(err, results);
+        }
+      },
+      "when using chained searches": {
+        topic: function () {
+          loggly.facet('ip', 'test')
+                .context({ from: 'NOW-1MONTH' })
+                .run(this.callback);
         },
         "should return a set of valid search results": function (err, results) {
           helpers.assertSearch(err, results);
