@@ -4,7 +4,7 @@
   "version": "0.2.0",
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "contributors": [
-    { "name": "Marak Squires", "email": "marak.squires@gmail.com" }
+    { "name": "Marak Squires", "email": "marak.squires@gmail.com" },
     { "name": "hij1nx", "email": "hij1nx@me.com" }
   ],
   "repository": {
