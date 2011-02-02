@@ -1,10 +1,11 @@
 {
   "name": "loggly",
   "description": "A client implementation for Loggly cloud Logging-as-a-Service API",
-  "version": "0.1.4",
+  "version": "0.2.0",
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "contributors": [
     { "name": "Marak Squires", "email": "marak.squires@gmail.com" }
+    { "name": "hij1nx", "email": "hij1nx@me.com" }
   ],
   "repository": {
       "type": "git",
