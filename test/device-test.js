@@ -1,7 +1,7 @@
 /*
  * device-test.js: Tests for Loggly device requests
  *
- * (C) 2010 Charlie Robbins
+ * (C) 2010 Nodejitsu Inc.
  * MIT LICENSE
  *
  */

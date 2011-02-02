@@ -1,7 +1,7 @@
 /*
  * interns-test.js: Tests for Loggly interns utility module
  *
- * (C) 2010 Charlie Robbins
+ * (C) 2010 Nodejitsu Inc.
  * MIT LICENSE
  *
  */

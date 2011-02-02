@@ -1,7 +1,7 @@
 /*
  * input-test.js: Tests for Loggly input requests
  *
- * (C) 2010 Charlie Robbins
+ * (C) 2010 Nodejitsu Inc.
  * MIT LICENSE
  *
  */
@@ -31,7 +31,7 @@ vows.describe('node-loggly/inputs').addBatch({
     "the facet() method": {
       "when searching by ip": {
         topic: function () {
-          loggly.facet('ip', 'test', { from: 'NOW-1MONTH' }, this.callback);
+          loggly.facet('ip', 'test', this.callback);
         },
         "should return a set of valid search results": function (err, results) {
           helpers.assertSearch(err, results);

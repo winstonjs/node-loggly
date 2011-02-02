@@ -1,7 +1,7 @@
 /*
  * input-test.js: Tests for Loggly input requests
  *
- * (C) 2010 Charlie Robbins
+ * (C) 2010 Nodejitsu Inc.
  * MIT LICENSE
  *
  */
