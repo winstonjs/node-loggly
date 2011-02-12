@@ -108,7 +108,7 @@ Loggly also exposes searches that can return counts of events over a time range.
   var util = require('util');
   
   client.facet('ip', '404')
-        .context({ rows: 10 })
+        .context({ buckets: 10 })
         .run(function (err, results) {
           // Inspect the result set
           util.inspect(results.data);
