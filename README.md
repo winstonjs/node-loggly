@@ -159,7 +159,7 @@ Once you have valid Rackspace credentials you can run tests with [vows][8]:
 </pre>
 
 #### Author: [Charlie Robbins](http://www.github.com/indexzero)
-#### Contributors: [Marak Squires](http://github.com/marak), [hij1nx](http://github.com/hij1nx)
+#### Contributors: [Marak Squires](http://github.com/marak), [hij1nx](http://github.com/hij1nx), [Kord Campbell](http://loggly.com)
 
 [0]: http://wiki.loggly.com/apidocumentation
 [1]: http://wiki.loggly.com/loggingfromcode
