@@ -9,7 +9,7 @@ A client implementation for Loggly in node.js
   curl http://npmjs.org/install.sh | sh
 </pre>
 
-### Installing winston
+### Installing node-loggly
 <pre>
   [sudo] npm install loggly
 </pre>
