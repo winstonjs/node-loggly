@@ -8,11 +8,8 @@
  
 var path = require('path'),
     vows = require('vows'),
-    assert = require('assert');
-    
-require.paths.unshift(path.join(__dirname, '..', 'lib'));
-
-var interns = require('loggly/interns');
+    assert = require('assert'),
+    interns = require('../lib/loggly/interns');
 
 vows.describe('node-loggly/interns').addBatch({
   "When using the interns module": {

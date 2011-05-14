@@ -6,8 +6,6 @@
  *
  */
 
-require.paths.unshift(require('path').join(__dirname, '..', 'lib'));
- 
 var path = require('path'),
     vows = require('vows'),
     assert = require('assert'),
@@ -16,7 +14,7 @@ var path = require('path'),
 var options = {},
     testContext = {},
     config = helpers.loadConfig(),
-    loggly = require('loggly').createClient(config);
+    loggly = require('../lib/loggly').createClient(config);
 
 vows.describe('node-loggly/inputs').addBatch({
   "When using the node-loggly client": {

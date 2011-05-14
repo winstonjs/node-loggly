@@ -6,15 +6,13 @@
  *
  */
 
-require.paths.unshift(require('path').join(__dirname, '..', 'lib'));
- 
 var path = require('path'),
     vows = require('vows'),
     assert = require('assert'),
     helpers = require('./helpers');
     
 var config = helpers.loadConfig(),
-    loggly = require('loggly').createClient({ subdomain: config.subdomain });
+    loggly = require('../lib/loggly').createClient({ subdomain: config.subdomain });
 
 vows.describe('node-loggly/inputs').addBatch({
   "When using the node-loggly client": {

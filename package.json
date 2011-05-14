@@ -9,14 +9,17 @@
     { "name": "Kord Campbell", "email": "kordless@loggly.com" }
   ],
   "repository": {
-      "type": "git",
-      "url": "http://github.com/nodejitsu/node-loggly.git" 
+    "type": "git",
+    "url": "http://github.com/nodejitsu/node-loggly.git" 
   },
   "keywords": ["cloud computing", "api", "logging", "loggly"],
   "dependencies": {
-    "request": ">= 1.9.0"
+    "request": "1.9.x"
+  },
+  "devDependencies": {
+    "vows": "0.5.x"
   },
   "main": "./lib/loggly",
   "scripts": { "test": "vows test/*-test.js --spec" },
-  "engines": { "node": ">= 0.4.0" }
+  "engines": { "node": "0.4.x" }
 }

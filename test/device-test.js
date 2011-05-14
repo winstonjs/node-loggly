@@ -5,8 +5,6 @@
  * MIT LICENSE
  *
  */
-
-require.paths.unshift(require('path').join(__dirname, '..', 'lib'));
  
 var path = require('path'),
     vows = require('vows'),
@@ -15,7 +13,7 @@ var path = require('path'),
 
 var options = {},
     config = helpers.loadConfig(),
-    loggly = require('loggly').createClient(config);
+    loggly = require('../lib/loggly').createClient(config);
 
 vows.describe('node-loggly/devices').addBatch({
   "When using the node-loggly client": {
