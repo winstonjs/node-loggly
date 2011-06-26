@@ -160,7 +160,7 @@ All of the node-loggly tests are written in [vows][8], and cover all of the use 
   }
 ```
 
-Once you have valid Rackspace credentials you can run tests with [vows][8]:
+Once you have valid Loggly credentials you can run tests with [vows][8]:
 
 ``` bash
   $ npm test
