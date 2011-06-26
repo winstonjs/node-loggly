@@ -57,6 +57,28 @@ vows.describe('node-loggly/search').addBatch({
           helpers.assertSearch(err, results);
         }
       }
+    },
+    "the _checkRange() method": {
+      "with invalid options set": {
+        "should correct them": function () {
+          var search = loggly.search('logging message')
+            .context({ from: 'NOW', until: '1DAY' })
+            ._checkRange();
+                
+          assert.equal(search._context.from, 'NOW-24HOURS');
+          assert.equal(search._context.until, 'NOW');
+        }
+      },
+      "with valid options set": {
+        "should not modify them": function () {
+          var search = loggly.search('logging message')
+            .context({ from: 'NOW-2MONTHS', until: 'NOW' })
+            ._checkRange();
+                
+          assert.equal(search._context.from, 'NOW-2MONTHS');
+          assert.equal(search._context.until, 'NOW');
+        }
+      }
     }
   }
 }).export(module);

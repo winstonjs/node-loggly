@@ -14,7 +14,8 @@
   },
   "keywords": ["cloud computing", "api", "logging", "loggly"],
   "dependencies": {
-    "request": "1.9.x"
+    "request": "1.9.x",
+    "timespan": "2.x.x"
   },
   "devDependencies": {
     "vows": "0.5.x"
