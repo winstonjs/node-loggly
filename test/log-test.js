@@ -15,8 +15,6 @@ var config = helpers.loadConfig(),
     loggly = require('../lib/loggly').createClient({ subdomain: config.subdomain }),
     logglyJSON = require('../lib/loggly').createClient({ subdomain: config.subdomain, json: true });
 
-console.log(logglyJSON);
-
 vows.describe('node-loggly/inputs (no auth)').addBatch({
   "When using the node-loggly client without authentication": {
     "the log() method to a 'text' input": {
