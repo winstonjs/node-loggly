@@ -15,23 +15,37 @@ var fs = require('fs'),
 
 var helpers = exports;
 
+helpers.validConfig = function (config) {
+  return config
+      && config.subdomain !== 'test-subdomain'
+      && config.auth
+      && config.auth.username !== 'test-username'
+      && config.auth.password !== 'test-password'
+      && config.inputs
+      && config.inputs.test
+      && config.inputs.test_json;
+};
+
 helpers.loadConfig = function () {
   try {
     var configFile = path.join(__dirname, 'data', 'test-config.json'),
         stats = fs.statSync(configFile)
         config = JSON.parse(fs.readFileSync(configFile).toString());
-    if (config.subdomain === 'test-subdomain'
-        || config.auth.username === 'test-username'
-        || config.auth.password === 'test-password') {
+    
+    if (!helpers.validConfig(config)) {
       util.puts('Config file test-config.json must be updated with valid data before running tests');
       process.exit(0);
     }
 
-    helpers.config = config;
-    return config;
+    helpers.config = config || {}
+    return config || {};
   }
   catch (ex) {
-    util.puts('Config file test-config.json must be created with valid data before running tests');
+    util.puts('Error parsing test-config.json');
+    ex.stack.split('\n').forEach(function (line) {
+      console.log(line);
+    });
+    
     process.exit(0);
   }
 };

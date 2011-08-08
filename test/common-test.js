@@ -1,5 +1,5 @@
 /*
- * interns-test.js: Tests for Loggly interns utility module
+ * common-test.js: Tests for Loggly `common` utility module
  *
  * (C) 2010 Nodejitsu Inc.
  * MIT LICENSE
@@ -9,20 +9,20 @@
 var path = require('path'),
     vows = require('vows'),
     assert = require('assert'),
-    interns = require('../lib/loggly/interns');
+    common = require('../lib/loggly/common');
 
-vows.describe('node-loggly/interns').addBatch({
-  "When using the interns module": {
+vows.describe('node-loggly/common').addBatch({
+  "When using the common module": {
     "the clone() method": {
       topic: function () {
         this.obj = {
-          name: 'interns',
+          name: 'common',
           deep: {
             first: 'first',
             second: 'second'
           }
         };
-        return interns.clone(this.obj);
+        return common.clone(this.obj);
       },
       "should return a deep clone of the object": function (clone) {
         assert.isFalse(this.obj.deep === clone.deep);

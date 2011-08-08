@@ -30,7 +30,7 @@ vows.describe('node-loggly/devices').addBatch({
     },
     "the addDeviceToInput() method": {
       topic: function () {
-        loggly.addDeviceToInput(config.inputs[0].id, '127.0.0.1', this.callback);
+        loggly.addDeviceToInput(config.inputs.test.id, '127.0.0.1', this.callback);
       },
       "should respond with 200 status code": function (err, res) {
         assert.isNull(err);

@@ -32,103 +32,107 @@ vows.describe('node-loggly/inputs').addBatch({
         });
       }
     },
-    "the getInput('test') method": {
-      topic: function () {
-        loggly.getInput('test', this.callback);
+    "the getInput method": {
+      "when called with a plaintext input": {
+        topic: function () {
+          loggly.getInput('test', this.callback);
+        },
+        "should return a valid input": function (err, input) {
+          assert.isNull(err);
+          helpers.assertInput(input);
+        },
+        "of the format 'text'": function (err, input) {
+          assert.isNull(err);
+          assert.equal(input.format, 'text');
+        },
+        "that matches the first input in the test configuration": function (err, input) {
+          assert.equal(config.inputs.test.token,input.input_token);
+          assert.equal(config.inputs.test.id,input.id);
+          testContext.input = input;
+        }
       },
-      "should return a valid input": function (err, input) {
-        assert.isNull(err);
-        helpers.assertInput(input);
-      },
-      "of the format 'text'": function (err, input) {
-        assert.isNull(err);
-        assert.equal(input.format, 'text');
-      },
-      "that matches the first input in the test configuration": function (err, input) {
-        assert.equal(config.inputs[0].token,input.input_token);
-        assert.equal(config.inputs[0].id,input.id);
-        testContext.input = input;
-      }
-    },
-    "the getInput('test_json') method": {
-      topic: function () {
-        logglyJSON.getInput('test_json', this.callback);
-      },
-      "should return a valid input": function (err, input) {
-        assert.isNull(err);
-        helpers.assertInput(input);
-      },
-      "of the format 'json'": function (err, input) {
-        assert.isNull(err);
-        assert.equal(input.format, 'json');
-      },
-      "that matches the second input in the test configuration": function (err, input) {
-        assert.equal(config.inputs[1].token,input.input_token);
-        assert.equal(config.inputs[1].id,input.id);
-        testContext.inputJSON = input;
+      "when called with a json input": {
+        topic: function () {
+          logglyJSON.getInput('test_json', this.callback);
+        },
+        "should return a valid input": function (err, input) {
+          assert.isNull(err);
+          helpers.assertInput(input);
+        },
+        "of the format 'json'": function (err, input) {
+          assert.isNull(err);
+          assert.equal(input.format, 'json');
+        },
+        "that matches the second input in the test configuration": function (err, input) {
+          assert.equal(config.inputs.test_json.token,input.input_token);
+          assert.equal(config.inputs.test_json.id,input.id);
+          testContext.inputJSON = input;
+        }
       }
     }
   }
 }).addBatch({
   "When using the node-loggly client": {
-    "the log() method to a 'text' input": {
-      "when passed a callback": {
-        topic: function () {
-          loggly.log(
-            config.inputs[0].token,
-            'this is a test logging message from /test/input-test.js',
-            this.callback);
+    "the log() method": {
+      "to a 'text' input": {
+        "when passed a callback": {
+          topic: function () {
+            loggly.log(
+              config.inputs.test.token,
+              'this is a test logging message from /test/input-test.js',
+              this.callback);
+          },
+          "should log messages to loggly": function (err, result) {
+            assert.isNull(err);
+            assert.isObject(result);
+            assert.equal(result.response, 'ok');
+          }
         },
-        "should log messages to loggly": function (err, result) {
-          assert.isNull(err);
-          assert.isObject(result);
-          assert.equal(result.response, 'ok');
+        "when not passed a callback": {
+          topic: function () {
+            var emitter = loggly.log(config.inputs.test.token, 'this is a test logging message from /test/input-test.js');
+            emitter.on('log', this.callback.bind(null, null));
+          },
+          "should log messages to loggly": function (err, result) {
+            assert.isNull(err);
+            assert.isObject(result);
+            assert.equal(result.response, 'ok');
+          }
         }
       },
-      "when not passed a callback": {
-        topic: function () {
-          var emitter = loggly.log(config.inputs[0].token, 'this is a test logging message from /test/input-test.js');
-          emitter.on('log', this.callback.bind(null, null));
+      "to a 'json' input": {
+        "when passed a callback": {
+          topic: function () {
+            logglyJSON.log(
+              config.inputs.test_json.token,
+              {
+                timestamp: new Date().getTime(),
+                message: 'this is a test logging message from /test/input-test.js'
+              },
+              this.callback);
+          },
+          "should log messages to loggly": function (err, result) {
+            assert.isNull(err);
+            assert.isObject(result);
+            assert.equal(result.response, 'ok');
+          }
         },
-        "should log messages to loggly": function (err, result) {
-          assert.isNull(err);
-          assert.isObject(result);
-          assert.equal(result.response, 'ok');
-        }
-      }
-    },
-    "the log() method to a 'json' input": {
-      "when passed a callback": {
-        topic: function () {
-          logglyJSON.log(
-            config.inputs[1].token,
-            {
-              timestamp: new Date().getTime(),
-              message: 'this is a test logging message from /test/input-test.js'
-            },
-            this.callback);
-        },
-        "should log messages to loggly": function (err, result) {
-          assert.isNull(err);
-          assert.isObject(result);
-          assert.equal(result.response, 'ok');
-        }
-      },
-      "when not passed a callback": {
-        topic: function () {
-          var emitter = logglyJSON.log(
-            config.inputs[1].token,
-            {
-              timestamp: new Date().getTime(),
-              message: 'this is a test logging message from /test/input-test.js'
-            }
-          );
-          emitter.on('log', this.callback.bind(null, null));
-        },
-        "should log messages to loggly": function (err, result) {
-          assert.isNull(err);
-          assert.isObject(result);
-          assert.equal(result.response, 'ok');
+        "when not passed a callback": {
+          topic: function () {
+            var emitter = logglyJSON.log(
+              config.inputs.test_json.token,
+              {
+                timestamp: new Date().getTime(),
+                message: 'this is a test logging message from /test/input-test.js'
+              }
+            );
+            emitter.on('log', this.callback.bind(null, null));
+          },
+          "should log messages to loggly": function (err, result) {
+            assert.isNull(err);
+            assert.isObject(result);
+            assert.equal(result.response, 'ok');
+          }
         }
       }
     }
