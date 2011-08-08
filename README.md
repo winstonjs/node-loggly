@@ -19,7 +19,7 @@ A client implementation for Loggly in node.js
 The node-loggly library is compliant with the [Loggly API][0]. Using node-loggly is easy for a variety of scenarios: logging, working with devices and inputs, searching, and facet searching.
 
 ### Getting Started
-Before we can do anything with loggly, we have to create a client with valid credentials. We will authenticate for you automatically: 
+Before we can do anything with Loggly, we have to create a client with valid credentials. We will authenticate for you automatically: 
 
 ``` js
   var loggly = require('loggly');
@@ -34,7 +34,7 @@ Before we can do anything with loggly, we have to create a client with valid cre
 ```
 
 ### Logging
-There are two ways to send log information to loggly via node-loggly. The first is to simply call client.log with an appropriate input token:
+There are two ways to send log information to Loggly via node-loggly. The first is to simply call client.log with an appropriate input token:
 
 ``` js
   client.log('your-really-long-input-token', '127.0.0.1 - Theres no place like home', function (err, result) {
@@ -48,7 +48,7 @@ Note that the callback in the above example is optional, if you prefer the 'fire
   client.log('your-really-long-input-token', '127.0.0.1 - Theres no place like home');
 ```
 
-The second way to send log information to loggly is to do so once you've retrieved an input directly from loggly:
+The second way to send log information to Loggly is to do so once you've retrieved an input directly from Loggly:
 
 ``` js
   client.getInput('your-input-name', function (err, input) {
@@ -78,7 +78,7 @@ will be logged as:
 ```
 
 ### Logging Objects to JSON Enabled Loggly Inputs
-It is also possible to log complex objects using the new JSON capabilities of loggly. To enable JSON functionality in the client simply add 'json: true' to the configuration:
+It is also possible to log complex objects using the new JSON capabilities of Loggly. To enable JSON functionality in the client simply add 'json: true' to the configuration:
 
 ``` js
   var config = {
@@ -91,7 +91,7 @@ It is also possible to log complex objects using the new JSON capabilities of lo
   };
 ```
 
-When the json flag is enabled, objects will be converted to JSON using JSON.stringify before being transmitted to loggly. So
+When the json flag is enabled, objects will be converted to JSON using JSON.stringify before being transmitted to Loggly. So
 
 ``` js
   var source = {
@@ -109,11 +109,11 @@ When the json flag is enabled, objects will be converted to JSON using JSON.stri
 will be logged as:
 
 ``` json
-  {"foo":1,"bar":2,"buzz":{"sheep":"jumped","times":10}}
+  { "foo": 1, "bar": 2, "buzz": {"sheep": "jumped", "times": 10 }}
 ```
 
 ### Searching
-[Searching][3] with node-loggly is easy. All you have to do is use the search() method defined on each loggly client:
+[Searching][3] with node-loggly is easy. All you have to do is use the search() method defined on each Loggly client:
 
 ``` js
   var util = require('util');
@@ -179,7 +179,7 @@ Loggly exposes several entities that are available through node-loggly: inputs a
 ```
 
 ## Run Tests
-All of the node-loggly tests are written in [vows][8], and cover all of the use cases described above. You will need to add your Loggly username, password, subdomain, and a two test inputs to test/data/test-config.json before running tests. When configuring the test inputs on loggly, the first test input should be named 'test' using the HTTP service. The second input should be name 'test_json' using the HTTP service with the JSON logging option enabled:
+All of the node-loggly tests are written in [vows][8], and cover all of the use cases described above. You will need to add your Loggly username, password, subdomain, and a two test inputs to test/data/test-config.json before running tests. When configuring the test inputs on Loggly, the first test input should be named 'test' using the HTTP service. The second input should be name 'test_json' using the HTTP service with the JSON logging option enabled:
 
 ``` js
   {
@@ -188,16 +188,22 @@ All of the node-loggly tests are written in [vows][8], and cover all of the use 
       "username": "your-username",
       "password": "your-password"
     },
-    "inputs": [
-      {
-        "token": "your-really-long-token-you-got-when-you-created-an-http-input", // 'text' input
-        "id": 000 // ID of this input
+    "inputs": {
+      "test": {
+        //
+        // Token and ID of your plain-text input.
+        //
+        "token": "your-really-long-token-you-got-when-you-created-an-http-input",
+        "id": 000
       },
-      {
-        "token": "your-really-long-token-you-got-when-you-created-an-http-input", // 'json' input
-        "id": 001 // ID of this input
+      "test_json": {
+        //
+        // Token and ID of your JSON input.
+        //
+        "token": "your-really-long-token-you-got-when-you-created-an-http-input",
+        "id": 001
       },
-    ]
+    }
   }
 ```
 
