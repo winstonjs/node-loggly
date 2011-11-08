@@ -11,7 +11,7 @@ A client implementation for Loggly in node.js
 
 ### Installing node-loggly
 ``` bash
-  $ curl [sudo] npm install loggly
+  $ [sudo] npm install loggly
 ```
 
 ## Usage
