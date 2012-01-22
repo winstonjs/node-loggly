@@ -15,11 +15,11 @@
   },
   "keywords": ["cloud computing", "api", "logging", "loggly"],
   "dependencies": {
-    "request": "2.1.x",
+    "request": "2.9.x",
     "timespan": "2.x.x"
   },
   "devDependencies": {
-    "vows": "0.5.x"
+    "vows": "0.6.x"
   },
   "main": "./lib/loggly",
   "scripts": { "test": "vows test/*-test.js --spec" },
