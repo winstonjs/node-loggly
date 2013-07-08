@@ -194,14 +194,16 @@ All of the node-loggly tests are written in [vows][8], and cover all of the use 
         // Token and ID of your plain-text input.
         //
         "token": "your-really-long-token-you-got-when-you-created-an-http-input",
-        "id": 000
+        "id": 000,
+        "name": "name-of-your-text-input"
       },
       "test_json": {
         //
         // Token and ID of your JSON input.
         //
         "token": "your-really-long-token-you-got-when-you-created-an-http-input",
-        "id": 001
+        "id": 001,
+        "name": "name-of-your-json-input"
       },
     }
   }
