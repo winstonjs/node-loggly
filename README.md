@@ -24,6 +24,7 @@ Before we can do anything with Loggly, we have to create a client with valid cre
 ``` js
   var loggly = require('loggly');
   var config = {
+    token: "your-really-long-input-token",
     subdomain: "your-subdomain",
     auth: {
       username: "your-username",
@@ -37,7 +38,7 @@ Before we can do anything with Loggly, we have to create a client with valid cre
 There are two ways to send log information to Loggly via node-loggly. The first is to simply call client.log with an appropriate input token:
 
 ``` js
-  client.log('your-really-long-input-token', '127.0.0.1 - Theres no place like home', function (err, result) {
+  client.log('127.0.0.1 - Theres no place like home', function (err, result) {
     // Do something once you've logged
   });
 ```
@@ -45,18 +46,8 @@ There are two ways to send log information to Loggly via node-loggly. The first 
 Note that the callback in the above example is optional, if you prefer the 'fire and forget' method of logging:
 
 ``` js
-  client.log('your-really-long-input-token', '127.0.0.1 - Theres no place like home');
+  client.log('127.0.0.1 - Theres no place like home');
 ```
-
-The second way to send log information to Loggly is to do so once you've retrieved an input directly from Loggly:
-
-``` js
-  client.getInput('your-input-name', function (err, input) {
-    input.log('127.0.0.1 - Theres no place like home');
-  });
-```
-
-Again the callback in the above example is optional and you can pass it if you'd like to.
 
 ### Logging Shallow JSON Object Literals as a String
 In addition to logging pure strings it is also possible to pass shallow JSON object literals (i.e. no nested objects) to client.log(..) or input.log(..) methods, which will get converted into the [Loggly recommended string representation][1]. So
@@ -163,16 +154,6 @@ Loggly exposes several entities that are available through node-loggly: inputs a
 
 ``` js
   //
-  // Returns all inputs associated with your account
-  //
-  client.getInputs(function (err, inputs) { /* ... */ });
-  
-  //
-  // Returns an input with the specified name
-  //
-  client.getInput('input-name', function (err, input) { /* ... */ });
-  
-  //
   // Returns all devices associated with your account
   //
   client.getDevices(function (err, devices) { /* ... */ });
@@ -188,28 +169,11 @@ All of the node-loggly tests are written in [vows][8], and cover all of the use 
 
 ``` js
   {
+    "token": "your-really-long-token-you-got-when-you-created-an-http-input",
     "subdomain": "your-subdomain",
     "auth": {
       "username": "your-username",
       "password": "your-password"
-    },
-    "inputs": {
-      "test": {
-        //
-        // Token and ID of your plain-text input.
-        //
-        "token": "your-really-long-token-you-got-when-you-created-an-http-input",
-        "id": 000,
-        "name": "name-of-your-text-input"
-      },
-      "test_json": {
-        //
-        // Token and ID of your JSON input.
-        //
-        "token": "your-really-long-token-you-got-when-you-created-an-http-input",
-        "id": 001,
-        "name": "name-of-your-json-input"
-      },
     }
   }
 ```

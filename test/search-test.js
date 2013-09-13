@@ -38,26 +38,6 @@ vows.describe('node-loggly/search').addBatch({
         }
       }
     },
-    "the facet() method": {
-      "when searching by ip": {
-        topic: function () {
-          loggly.facet('ip', 'test', this.callback);
-        },
-        "should return a set of valid search results": function (err, results) {
-          helpers.assertSearch(err, results);
-        }
-      },
-      "when using chained searches": {
-        topic: function () {
-          loggly.facet('ip', 'test')
-                .context({ from: 'NOW-1MONTH' })
-                .run(this.callback);
-        },
-        "should return a set of valid search results": function (err, results) {
-          helpers.assertSearch(err, results);
-        }
-      }
-    },
     "the _checkRange() method": {
       "with invalid options set": {
         "should correct them": function () {
