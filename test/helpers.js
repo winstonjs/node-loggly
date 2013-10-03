@@ -21,9 +21,7 @@ helpers.validConfig = function (config) {
       && config.auth
       && config.auth.username !== 'test-username'
       && config.auth.password !== 'test-password'
-      && config.inputs
-      && config.inputs.test
-      && config.inputs.test_json;
+      && config.token;
 };
 
 helpers.loadConfig = function () {

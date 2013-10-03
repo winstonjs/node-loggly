@@ -12,8 +12,8 @@ var path = require('path'),
     helpers = require('./helpers');
 
 var config = helpers.loadConfig(),
-    loggly = require('../lib/loggly').createClient({ subdomain: config.subdomain }),
-    logglyJSON = require('../lib/loggly').createClient({ subdomain: config.subdomain, json: true });
+    loggly = require('../lib/loggly').createClient({ subdomain: config.subdomain, token: config.token }),
+    logglyJSON = require('../lib/loggly').createClient({ subdomain: config.subdomain, token: config.token, json: true });
 
 vows.describe('node-loggly/inputs (no auth)').addBatch({
   "When using the node-loggly client without authentication": {
@@ -22,7 +22,6 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
         "when passed a callback": {
           topic: function () {
             loggly.log(
-              config.inputs.test.token,
               'this is a test logging message from /test/input-test.js',
               this.callback);
           },
@@ -34,8 +33,8 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
         },
         "when not passed a callback": {
           topic: function () {
-            var emitter = loggly.log(config.inputs.test.token, 'this is a test logging message from /test/input-test.js');
-            emitter.on('log', this.callback.bind(null, null));
+            loggly.log('this is a test logging message from /test/input-test.js');
+            loggly.on('log', this.callback.bind(null, null));
           },
           "should log messages to loggly": function (err, result) {
             assert.isNull(err);
@@ -47,13 +46,10 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
       "to a 'json' input": {
         "when passed a callback": {
           topic: function () {
-            logglyJSON.log(
-              config.inputs.test_json.token,
-              {
+            logglyJSON.log({
                 timestamp: new Date().getTime(),
                 message: 'this is a test logging message from /test/input-test.js'
-              },
-              this.callback);
+            }, this.callback);
           },
           "should log messages to loggly": function (err, result) {
             assert.isNull(err);
@@ -63,14 +59,11 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
         },
         "when not passed a callback": {
           topic: function () {
-            var emitter = logglyJSON.log(
-              config.inputs.test_json.token,
-              {
-                timestamp: new Date().getTime(),
-                message: 'this is a test logging message from /test/input-test.js'
-              }
-            );
-            emitter.on('log', this.callback.bind(null, null));
+            logglyJSON.log({
+              timestamp: new Date().getTime(),
+              message: 'this is a test logging message from /test/input-test.js'
+            });
+            logglyJSON.on('log', this.callback.bind(null, null));
           },
           "should log messages to loggly": function (err, result) {
             assert.isNull(err);
