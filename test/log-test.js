@@ -32,6 +32,14 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
             assert.equal(result.response, 'ok');
           }
         },
+      }
+    }
+  }
+})
+.addBatch({
+  "When using the node-loggly client without authentication": {
+    "the log() method": {
+      "to a 'text' input": {
         "when not passed a callback": {
           topic: function () {
             loggly.log('this is a test logging message from /test/input-test.js');
@@ -44,6 +52,12 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
           }
         }
       },
+    }
+  }
+})
+.addBatch({
+  "When using the node-loggly client without authentication": {
+    "the log() method": {
       "to a 'json' input": {
         "when passed a callback": {
           topic: function () {
@@ -57,7 +71,15 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
             assert.isObject(result);
             assert.equal(result.response, 'ok');
           }
-        },
+        }
+      }
+    }
+  }
+})
+.addBatch({
+  "When using the node-loggly client without authentication": {
+    "the log() method": {
+      "to a 'json' input": {
         "when not passed a callback": {
           topic: function () {
             logglyJSON.log({
