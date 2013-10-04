@@ -17,11 +17,11 @@ var helpers = exports;
 
 helpers.validConfig = function (config) {
   return config
-      && config.subdomain !== 'test-subdomain'
-      && config.auth
-      && config.auth.username !== 'test-username'
-      && config.auth.password !== 'test-password'
-      && config.token;
+    && config.subdomain !== 'test-subdomain'
+    && config.auth
+    && config.auth.username !== 'test-username'
+    && config.auth.password !== 'test-password'
+    && config.token;
 };
 
 helpers.loadConfig = function () {
@@ -46,26 +46,6 @@ helpers.loadConfig = function () {
     
     process.exit(0);
   }
-};
-
-helpers.assertInput = function (input) {
-  assert.instanceOf(input, loggly.Input);
-  assert.isNotNull(input.id);
-  assert.isNotNull(input.name);
-  assert.isNotNull(input.service);
-  assert.isNotNull(input.create);
-  assert.isNotNull(input.discover);
-  assert.isNotNull(input.discoverTime);
-  assert.isNotNull(input.description);
-};
-
-helpers.assertDevice = function (device) {
-  assert.instanceOf(device, loggly.Device);
-  assert.isNotNull(device.id);
-  assert.isNotNull(device.input);
-  assert.isNotNull(device.ipAddress);
-  assert.isNotNull(device.launched);
-  assert.isNotNull(device.resourceUri);
 };
 
 helpers.assertSearch = function (err, results) {

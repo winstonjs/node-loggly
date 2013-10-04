@@ -2,18 +2,6 @@
 
 A client implementation for Loggly in node.js
 
-## Installation
-
-### Installing npm (node package manager)
-``` bash
-  $ curl http://npmjs.org/install.sh | sh
-```
-
-### Installing node-loggly
-``` bash
-  $ [sudo] npm install loggly
-```
-
 ## Usage
 
 The node-loggly library is compliant with the [Loggly API][0]. Using node-loggly is easy for a variety of scenarios: logging, working with devices and inputs, searching, and facet searching.
@@ -23,15 +11,15 @@ Before we can do anything with Loggly, we have to create a client with valid cre
 
 ``` js
   var loggly = require('loggly');
-  var config = {
+
+  var client = loggly.createClient({
     token: "your-really-long-input-token",
     subdomain: "your-subdomain",
     auth: {
       username: "your-username",
       password: "your-password"
     }
-  };
-  var client = loggly.createClient(config);
+  });
 ```
 
 ### Logging
@@ -49,7 +37,7 @@ Note that the callback in the above example is optional, if you prefer the 'fire
   client.log('127.0.0.1 - Theres no place like home');
 ```
 
-### Logging Shallow JSON Object Literals as a String
+### Logging Shallow JSON Objects as a String
 In addition to logging pure strings it is also possible to pass shallow JSON object literals (i.e. no nested objects) to client.log(..) or input.log(..) methods, which will get converted into the [Loggly recommended string representation][1]. So
 
 ``` js
@@ -68,7 +56,7 @@ will be logged as:
   foo=1,bar=2,buzz=3
 ```
 
-### Logging Objects to JSON Enabled Loggly Inputs
+### Logging JSON Objects
 It is also possible to log complex objects using the new JSON capabilities of Loggly. To enable JSON functionality in the client simply add 'json: true' to the configuration:
 
 ``` js
@@ -120,48 +108,27 @@ The search() exposes a chainable interface that allows you to set additional sea
 ``` js
   var util = require('util');
   
-  client.search('404')
-        .meta({ ip: '127.0.0.1', inputname: test })
-        .context({ rows: 10 })
-        .run(function (err, results) {
-          // Inspect the result set
-          util.inspect(results.data);
-        });
+  client.search({ query: '404', rows: 10 })
+    .run(function (err, results) {
+      // Inspect the result set
+      util.inspect(results.data);
+    });
 ```
 
 The context of the search (set using the `.context()` method) represents additional parameters in the Loggly API besides the search query itself. See the [Search API documentation][9] for a list of all options.
 
 Metadata set using the `.meta()` method is data that is set in the query parameter of your Loggly search, but `:` delimited. For more information about search queries in Loggly, check out the [Search Language Guide][4] on the [Loggly Wiki][5].
 
-### Facet Searching
-Loggly also exposes searches that can return counts of events over a time range. These are called [facets][6]. The valid facets are 'ip', 'date', and 'input'. Performing a facet search is very similar to a normal search: 
+## Installation
 
-``` js
-  var util = require('util');
-  
-  client.facet('ip', '404')
-        .context({ buckets: 10 })
-        .run(function (err, results) {
-          // Inspect the result set
-          util.inspect(results.data);
-        });
+### Installing npm (node package manager)
+``` bash
+  $ curl http://npmjs.org/install.sh | sh
 ```
 
-The chaining and options for the facet method(s) are the same as the search method above. 
-
-### Working with Devices and Inputs
-Loggly exposes several entities that are available through node-loggly: inputs and devices. For more information about these terms, checkout the [Loggly Jargon][7] on the wiki. There are several methods available in node-loggly to work with these entities: 
-
-``` js
-  //
-  // Returns all devices associated with your account
-  //
-  client.getDevices(function (err, devices) { /* ... */ });
-
-  //
-  // Removes device from all inputs
-  //
-  client.removeDevice('device-ip', function (err, result) { /* ... */ });
+### Installing node-loggly
+``` bash
+  $ npm install loggly
 ```
 
 ## Run Tests

@@ -23,7 +23,8 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
           topic: function () {
             loggly.log(
               'this is a test logging message from /test/input-test.js',
-              this.callback);
+              this.callback
+            );
           },
           "should log messages to loggly": function (err, result) {
             assert.isNull(err);
