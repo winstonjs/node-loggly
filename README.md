@@ -4,7 +4,7 @@ A client implementation for Loggly in node.js
 
 ## Usage
 
-The node-loggly library is compliant with the [Loggly API][0]. Using node-loggly is easy for a variety of scenarios: logging, working with devices and inputs, searching, and facet searching.
+The `node-loggly` library is compliant with the [Loggly API][api]. Using `node-loggly` is easy for a variety of scenarios: logging, working with devices and inputs, searching, and facet searching.
 
 ### Getting Started
 Before we can do anything with Loggly, we have to create a client with valid credentials. We will authenticate for you automatically: 
@@ -38,7 +38,7 @@ Note that the callback in the above example is optional, if you prefer the 'fire
 ```
 
 ### Logging Shallow JSON Objects as a String
-In addition to logging pure strings it is also possible to pass shallow JSON object literals (i.e. no nested objects) to client.log(..) or input.log(..) methods, which will get converted into the [Loggly recommended string representation][1]. So
+In addition to logging pure strings it is also possible to pass shallow JSON object literals (i.e. no nested objects) to client.log(..) or input.log(..) methods, which will get converted into the [Loggly recommended string representation][sending-data]. So
 
 ``` js
   var source = {
@@ -92,18 +92,18 @@ will be logged as:
 ```
 
 ### Searching
-[Searching][3] with node-loggly is easy. All you have to do is use the search() method defined on each Loggly client:
+[Searching][search-api] with node-loggly is easy. All you have to do is use the search() method defined on each Loggly client:
 
 ``` js
   var util = require('util');
   
   client.search('404', function (err, results) {
     // Inspect the result set
-    util.inspect(results.data);
+    console.dir(results.events);
   });
 ```
 
-The search() exposes a chainable interface that allows you to set additional search parameters such as: ip, input name, rows, start, end, etc. 
+The search() method can also take an Object parameter that allows you to set additional search parameters such as: rows, from, until, etc. 
 
 ``` js
   var util = require('util');
@@ -111,13 +111,11 @@ The search() exposes a chainable interface that allows you to set additional sea
   client.search({ query: '404', rows: 10 })
     .run(function (err, results) {
       // Inspect the result set
-      util.inspect(results.data);
+      console.dir(results.events);
     });
 ```
 
-The context of the search (set using the `.context()` method) represents additional parameters in the Loggly API besides the search query itself. See the [Search API documentation][9] for a list of all options.
-
-Metadata set using the `.meta()` method is data that is set in the query parameter of your Loggly search, but `:` delimited. For more information about search queries in Loggly, check out the [Search Language Guide][4] on the [Loggly Wiki][5].
+See the [Loggly search guide][search] for more details on how to effectively search through your Loggly logs.
 
 ## Installation
 
@@ -132,7 +130,7 @@ Metadata set using the `.meta()` method is data that is set in the query paramet
 ```
 
 ## Run Tests
-All of the node-loggly tests are written in [vows][8], and cover all of the use cases described above. You will need to add your Loggly username, password, subdomain, and a two test inputs to test/data/test-config.json before running tests. When configuring the test inputs on Loggly, the first test input should be named 'test' using the HTTP service. The second input should be name 'test_json' using the HTTP service with the JSON logging option enabled:
+All of the node-loggly tests are written in [vows][vows], and cover all of the use cases described above. You will need to add your Loggly username, password, subdomain, and a two test inputs to test/data/test-config.json before running tests. When configuring the test inputs on Loggly, the first test input should be named 'test' using the HTTP service. The second input should be name 'test_json' using the HTTP service with the JSON logging option enabled:
 
 ``` js
   {
@@ -145,7 +143,7 @@ All of the node-loggly tests are written in [vows][8], and cover all of the use 
   }
 ```
 
-Once you have valid Loggly credentials you can run tests with [vows][8]:
+Once you have valid Loggly credentials you can run tests with [vows][vows]:
 
 ``` bash
   $ npm test
@@ -154,12 +152,8 @@ Once you have valid Loggly credentials you can run tests with [vows][8]:
 #### Author: [Charlie Robbins](http://www.github.com/indexzero)
 #### Contributors: [Marak Squires](http://github.com/marak), [hij1nx](http://github.com/hij1nx), [Kord Campbell](http://loggly.com), [Erik Hedenström](http://github.com/ehedenst),
 
-[0]: http://wiki.loggly.com/apidocumentation
-[1]: http://wiki.loggly.com/loggingfromcode
-[3]: http://wiki.loggly.com/retrieve_events#search_uri
-[4]: http://wiki.loggly.com/searchguide
-[5]: http://wiki.loggly.com/
-[6]: http://wiki.loggly.com/retrieve_events#facet_uris
-[7]: http://wiki.loggly.com/loggingjargon
-[8]: http://vowsjs.org
-[9]: http://wiki.loggly.com/retrieve_events#optional
+[api]: http://www.loggly.com/docs/api-overview/
+[sending-data]: http://www.loggly.com/docs/api-sending-data/
+[search-api]: http://www.loggly.com/docs/api-retrieving-data/
+[search]: http://www.loggly.com/docs/search-overview/
+[vows]: http://vowsjs.org
