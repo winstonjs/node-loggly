@@ -62,8 +62,8 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
         "when passed a callback": {
           topic: function () {
             logglyJSON.log({
-                timestamp: new Date().getTime(),
-                message: 'this is a test logging message from /test/input-test.js'
+              timestamp: new Date().getTime(),
+              message: 'this is a test logging message from /test/input-test.js'
             }, this.callback);
           },
           "should log messages to loggly": function (err, result) {

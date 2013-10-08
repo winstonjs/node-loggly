@@ -51,7 +51,6 @@ helpers.loadConfig = function () {
 helpers.assertSearch = function (err, results) {
   assert.isNull(err);
   assert.isObject(results);
-  assert.isTrue(typeof results.data !== 'undefined');
-  assert.isTrue(typeof results.numFound !== 'undefined');
-  assert.isTrue(typeof results.context !== 'undefined');
+  assert.isArray(results.events);
+  assert.isTrue(typeof results.total_events !== 'undefined');
 };

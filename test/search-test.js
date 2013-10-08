@@ -21,40 +21,41 @@ vows.describe('node-loggly/search').addBatch({
     "the search() method": {
       "when searching without chaining": {
         topic: function () {
-          loggly.search('logging message', this.callback);
+          loggly.search('logging message', this.callback)
         },
         "should return a set of valid search results": function (err, results) {
           helpers.assertSearch(err, results);
         }
       },
-      // "when searching with chaining": {
-      //   topic: function () {
-      //     loggly.search('logging message', this.callback);
-      //   },
-      //   "should return a set of valid search results": function (err, results) {
-      //     helpers.assertSearch(err, results);
-      //   }
-      // }
+      "when searching with chaining": {
+        topic: function () {
+          loggly.search('logging message')
+            .run(this.callback);
+        },
+        "should return a set of valid search results": function (err, results) {
+          helpers.assertSearch(err, results);
+        }
+      }
     },
-    // "the _checkRange() method": {
-    //   "with invalid options set": {
-    //     "should correct them": function () {
-    //       var search = loggly.search({ query: 'invalid logging message', from: 'now', until: '-1d' })
-    //         ._checkRange();
-    //
-    //       assert.equal(search.options.from, '-24h');
-    //       assert.equal(search.options.until, 'now');
-    //     }
-    //   },
-    //   "with valid options set": {
-    //     "should not modify them": function () {
-    //       var search = loggly.search({ query: 'valid logging message', from: '-2M', until: 'now' })
-    //         ._checkRange();
-    //
-    //       assert.equal(search.options.from, 'NOW-2MONTHS');
-    //       assert.equal(search.options.until, 'NOW');
-    //     }
-    //   }
-    // }
+    "the _checkRange() method": {
+      "with invalid options set": {
+        "should correct them": function () {
+          var search = loggly.search({ query: 'invalid logging message', from: 'now', until: '-1d' })
+            ._checkRange();
+
+          assert.equal(search.options.from, 'now');
+          assert.equal(search.options.until, '-1d');
+        }
+      },
+      "with valid options set": {
+        "should not modify them": function () {
+          var search = loggly.search({ query: 'valid logging message', from: '-2M', until: 'now' })
+            ._checkRange();
+
+          assert.equal(search.options.from, '-2M');
+          assert.equal(search.options.until, 'now');
+        }
+      }
+    }
   }
 }).export(module);
