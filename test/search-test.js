@@ -1,5 +1,5 @@
 /*
- * input-test.js: Tests for Loggly input requests
+ * search-test.js: Tests for Loggly search requests
  *
  * (C) 2010 Nodejitsu Inc.
  * MIT LICENSE
@@ -21,7 +21,7 @@ vows.describe('node-loggly/search').addBatch({
     "the search() method": {
       "when searching without chaining": {
         topic: function () {
-          loggly.search('logging message', this.callback);
+          loggly.search('logging message', this.callback)
         },
         "should return a set of valid search results": function (err, results) {
           helpers.assertSearch(err, results);
@@ -30,28 +30,7 @@ vows.describe('node-loggly/search').addBatch({
       "when searching with chaining": {
         topic: function () {
           loggly.search('logging message')
-                .meta({ inputname: 'test' })
-                .run(this.callback);
-        },
-        "should return a set of valid search results": function (err, results) {
-          helpers.assertSearch(err, results);
-        }
-      }
-    },
-    "the facet() method": {
-      "when searching by ip": {
-        topic: function () {
-          loggly.facet('ip', 'test', this.callback);
-        },
-        "should return a set of valid search results": function (err, results) {
-          helpers.assertSearch(err, results);
-        }
-      },
-      "when using chained searches": {
-        topic: function () {
-          loggly.facet('ip', 'test')
-                .context({ from: 'NOW-1MONTH' })
-                .run(this.callback);
+            .run(this.callback);
         },
         "should return a set of valid search results": function (err, results) {
           helpers.assertSearch(err, results);
@@ -61,22 +40,20 @@ vows.describe('node-loggly/search').addBatch({
     "the _checkRange() method": {
       "with invalid options set": {
         "should correct them": function () {
-          var search = loggly.search('logging message')
-            .context({ from: 'NOW', until: '1DAY' })
+          var search = loggly.search({ query: 'invalid logging message', from: 'now', until: '-1d' })
             ._checkRange();
-                
-          assert.equal(search._context.from, 'NOW-24HOURS');
-          assert.equal(search._context.until, 'NOW');
+
+          assert.equal(search.options.from, 'now');
+          assert.equal(search.options.until, '-1d');
         }
       },
       "with valid options set": {
         "should not modify them": function () {
-          var search = loggly.search('logging message')
-            .context({ from: 'NOW-2MONTHS', until: 'NOW' })
+          var search = loggly.search({ query: 'valid logging message', from: '-2M', until: 'now' })
             ._checkRange();
-                
-          assert.equal(search._context.from, 'NOW-2MONTHS');
-          assert.equal(search._context.until, 'NOW');
+
+          assert.equal(search.options.from, '-2M');
+          assert.equal(search.options.until, 'now');
         }
       }
     }

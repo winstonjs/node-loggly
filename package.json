@@ -17,18 +17,19 @@
     "loggly"
   ],
   "dependencies": {
-    "request": "2.9.x",
-    "timespan": "2.x.x"
+    "request": "2.27.x",
+    "timespan": "2.3.x"
   },
   "devDependencies": {
-    "vows": "0.6.x"
+    "vows": "0.7.x"
   },
   "main": "./lib/loggly",
   "scripts": {
     "test": "vows test/*-test.js --spec"
   },
+  "license": "MIT",
   "engines": {
-    "node": ">= 0.4.0"
+    "node": ">= 0.8.0"
   }
 }
 

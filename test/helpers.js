@@ -17,13 +17,11 @@ var helpers = exports;
 
 helpers.validConfig = function (config) {
   return config
-      && config.subdomain !== 'test-subdomain'
-      && config.auth
-      && config.auth.username !== 'test-username'
-      && config.auth.password !== 'test-password'
-      && config.inputs
-      && config.inputs.test
-      && config.inputs.test_json;
+    && config.subdomain !== 'test-subdomain'
+    && config.auth
+    && config.auth.username !== 'test-username'
+    && config.auth.password !== 'test-password'
+    && config.token;
 };
 
 helpers.loadConfig = function () {
@@ -50,30 +48,9 @@ helpers.loadConfig = function () {
   }
 };
 
-helpers.assertInput = function (input) {
-  assert.instanceOf(input, loggly.Input);
-  assert.isNotNull(input.id);
-  assert.isNotNull(input.name);
-  assert.isNotNull(input.service);
-  assert.isNotNull(input.create);
-  assert.isNotNull(input.discover);
-  assert.isNotNull(input.discoverTime);
-  assert.isNotNull(input.description);
-};
-
-helpers.assertDevice = function (device) {
-  assert.instanceOf(device, loggly.Device);
-  assert.isNotNull(device.id);
-  assert.isNotNull(device.input);
-  assert.isNotNull(device.ipAddress);
-  assert.isNotNull(device.launched);
-  assert.isNotNull(device.resourceUri);
-};
-
 helpers.assertSearch = function (err, results) {
   assert.isNull(err);
   assert.isObject(results);
-  assert.isTrue(typeof results.data !== 'undefined');
-  assert.isTrue(typeof results.numFound !== 'undefined');
-  assert.isTrue(typeof results.context !== 'undefined');
+  assert.isArray(results.events);
+  assert.isTrue(typeof results.total_events !== 'undefined');
 };
