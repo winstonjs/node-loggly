@@ -97,4 +97,46 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
       }
     }
   }
+}).addBatch({
+  "When using the node-loggly client without authentication": {
+    "the log() method": {
+      "to a 'json' input with a single tag": {
+        "when not passed a callback": {
+          topic: function () {
+            logglyJSON.log({
+              timestamp: new Date().getTime(),
+              message: 'this is a test logging message from /test/input-test.js'
+            }, "WOOOO-TAG");
+            logglyJSON.on('log', this.callback.bind(null, null));
+          },
+          "should log messages to loggly": function (err, result) {
+            assert.isNull(err);
+            assert.isObject(result);
+            assert.equal(result.response, 'ok');
+          }
+        }
+      }
+    }
+  }
+}).addBatch({
+  "When using the node-loggly client without authentication": {
+    "the log() method": {
+      "to a 'json' input with tags that exist as an array": {
+        "when not passed a callback": {
+          topic: function () {
+            logglyJSON.log({
+              timestamp: new Date().getTime(),
+              message: 'this is a test logging message from /test/input-test.js'
+            }, ["tag", "tag2"]);
+            logglyJSON.on('log', this.callback.bind(null, null));
+          },
+          "should log messages to loggly": function (err, result) {
+            assert.isNull(err);
+            assert.isObject(result);
+            assert.equal(result.response, 'ok');
+          }
+        }
+      }
+    }
+  }
 }).export(module);
