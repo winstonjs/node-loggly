@@ -91,6 +91,13 @@ will be logged as:
   { "foo": 1, "bar": 2, "buzz": {"sheep": "jumped", "times": 10 }}
 ```
 
+### Logging arrays
+It is possible to send arrays, which will result in one single request to Loggly.
+
+``` js
+  input.log([ {iam:'number 1'}, {iam:'number 2'} ])
+```
+
 ### Searching
 [Searching][search-api] with node-loggly is easy. All you have to do is use the search() method defined on each Loggly client:
 

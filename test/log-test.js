@@ -139,4 +139,25 @@ vows.describe('node-loggly/inputs (no auth)').addBatch({
       }
     }
   }
+}).addBatch({
+  "When using the node-loggly client without authentication": {
+    "the log() method": {
+      "takes an array": {
+        "when not passed a callback": {
+          topic: function () {
+            logglyJSON.log([
+              { work: 'it harder' },
+              { make: 'it better' }
+            ]);
+            logglyJSON.on('log', this.callback.bind(null, null));
+          },
+          "should log messages to loggly": function (err, result) {
+            assert.isNull(err);
+            assert.isObject(result);
+            assert.equal(result.response, 'ok');
+          }
+        }
+      }
+    }
+  }
 }).export(module);
