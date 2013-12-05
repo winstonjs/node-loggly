@@ -1,7 +1,7 @@
 {
   "name": "loggly",
   "description": "A client implementation for Loggly cloud Logging-as-a-Service API",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Nodejitsu Inc. <info@nodejitsu.com>",
   "maintainers": [
     "indexzero <charlie@nodejitsu.com>"
