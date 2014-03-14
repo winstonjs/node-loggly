@@ -7,7 +7,7 @@ A client implementation for Loggly in node.js
 The `node-loggly` library is compliant with the [Loggly API][api]. Using `node-loggly` is easy for a variety of scenarios: logging, working with devices and inputs, searching, and facet searching.
 
 ### Getting Started
-Before we can do anything with Loggly, we have to create a client with valid credentials. We will authenticate for you automatically: 
+Before we can do anything with Loggly, we have to create a client with valid credentials. We will authenticate for you automatically:
 
 ``` js
   var loggly = require('loggly');
@@ -18,7 +18,11 @@ Before we can do anything with Loggly, we have to create a client with valid cre
     auth: {
       username: "your-username",
       password: "your-password"
-    }
+    },
+    //
+    // Optional: Tag to send with EVERY log message
+    //
+    tags: ['global-tag']
   });
 ```
 
@@ -42,10 +46,13 @@ Note that the callback in the above example is optional, if you prefer the 'fire
 If you're using Loggly's [tags](https://www.loggly.com/docs/tags/) functionality, simply include an array of tags as the second argument to the `log` method:
 
 ``` js
-  client.log(127.0.0.1 - Theres no place like home', [ 'dorothy' ], function (err, result) {
+  client.log('127.0.0.1 - Theres no place like home', [ 'dorothy' ], function (err, result) {
     // Do something once you've logged
   });
 ```
+
+*note* Tags passed into the log function will be merged with any global tags you may have defined.
+
 
 ### Logging Shallow JSON Objects as a String
 In addition to logging pure strings it is also possible to pass shallow JSON object literals (i.e. no nested objects) to client.log(..) or input.log(..) methods, which will get converted into the [Loggly recommended string representation][sending-data]. So
@@ -56,11 +63,11 @@ In addition to logging pure strings it is also possible to pass shallow JSON obj
     bar: 2,
     buzz: 3
   };
-  
+
   input.log(source);
 ```
 
-will be logged as: 
+will be logged as:
 
 ```
   foo=1,bar=2,buzz=3
@@ -113,18 +120,18 @@ It is possible to send arrays, which will result in one single request to Loggly
 
 ``` js
   var util = require('util');
-  
+
   client.search('404', function (err, results) {
     // Inspect the result set
     console.dir(results.events);
   });
 ```
 
-The search() method can also take an Object parameter that allows you to set additional search parameters such as: rows, from, until, etc. 
+The search() method can also take an Object parameter that allows you to set additional search parameters such as: rows, from, until, etc.
 
 ``` js
   var util = require('util');
-  
+
   client.search({ query: '404', rows: 10 })
     .run(function (err, results) {
       // Inspect the result set
