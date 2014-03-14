@@ -37,6 +37,16 @@ Note that the callback in the above example is optional, if you prefer the 'fire
   client.log('127.0.0.1 - Theres no place like home');
 ```
 
+### Logging with Tags
+
+If you're using Loggly's [tags](https://www.loggly.com/docs/tags/) functionality, simply include an array of tags as the second argument to the `log` method:
+
+``` js
+  client.log(127.0.0.1 - Theres no place like home', [ 'dorothy' ], function (err, result) {
+    // Do something once you've logged
+  });
+```
+
 ### Logging Shallow JSON Objects as a String
 In addition to logging pure strings it is also possible to pass shallow JSON object literals (i.e. no nested objects) to client.log(..) or input.log(..) methods, which will get converted into the [Loggly recommended string representation][sending-data]. So
 
