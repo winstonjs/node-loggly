@@ -18,7 +18,8 @@
   ],
   "dependencies": {
     "request": "2.27.x",
-    "timespan": "2.3.x"
+    "timespan": "2.3.x",
+    "json-stringify-safe": "5.0.x"
   },
   "devDependencies": {
     "vows": "0.7.x"
@@ -32,4 +33,3 @@
     "node": ">= 0.8.0"
   }
 }
-
