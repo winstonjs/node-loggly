@@ -1,7 +1,7 @@
 /*
  * helpers.js: Test helpers for node-loggly
  *
- * (C) 2010 Nodejitsu Inc.
+ * (C) 2010 Charlie Robbins
  * MIT LICENSE
  *
  */
@@ -29,7 +29,7 @@ helpers.loadConfig = function () {
     var configFile = path.join(__dirname, 'data', 'test-config.json'),
         stats = fs.statSync(configFile)
         config = JSON.parse(fs.readFileSync(configFile).toString());
-    
+
     if (!helpers.validConfig(config)) {
       util.puts('Config file test-config.json must be updated with valid data before running tests');
       process.exit(0);
@@ -43,7 +43,7 @@ helpers.loadConfig = function () {
     ex.stack.split('\n').forEach(function (line) {
       console.log(line);
     });
-    
+
     process.exit(0);
   }
 };

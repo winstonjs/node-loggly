@@ -1,11 +1,11 @@
 /*
  * common-test.js: Tests for Loggly `common` utility module
  *
- * (C) 2010 Nodejitsu Inc.
+ * (C) 2010 Charlie Robbins
  * MIT LICENSE
  *
  */
- 
+
 var path = require('path'),
     vows = require('vows'),
     assert = require('assert'),

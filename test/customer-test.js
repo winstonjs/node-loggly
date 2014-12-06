@@ -1,7 +1,7 @@
 /*
  * search-test.js: Tests for Loggly search requests
  *
- * (C) 2010 Nodejitsu Inc.
+ * (C) 2010 Charlie Robbins
  * MIT LICENSE
  *
  */
@@ -10,7 +10,7 @@ var path = require('path'),
     vows = require('vows'),
     assert = require('assert'),
     helpers = require('./helpers');
-    
+
 var options = {},
     testContext = {},
     config = helpers.loadConfig(),

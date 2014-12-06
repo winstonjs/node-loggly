@@ -1,7 +1,7 @@
 /*
  * log-test.js: Tests for vanilla logging with no authentication.
  *
- * (C) 2010 Nodejitsu Inc.
+ * (C) 2010 Charlie Robbins
  * MIT LICENSE
  *
  */
