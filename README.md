@@ -1,6 +1,6 @@
 # node-loggly
 
-A client implementation for Loggly in node.js
+A client implementation for Loggly in node.js. Check out Loggly's [Node logging documentation](https://www.loggly.com/docs/nodejs-logs/) for more. 
 
 ## Usage
 
