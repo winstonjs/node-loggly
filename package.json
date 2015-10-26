@@ -19,10 +19,12 @@
     "json-stringify-safe": "5.0.x"
   },
   "devDependencies": {
+    "common-style": "^3.1.0",
     "vows": "0.8.x"
   },
   "main": "./lib/loggly",
   "scripts": {
+    "pretest": "common lib/",
     "test": "vows test/*-test.js --spec"
   },
   "license": "MIT",
