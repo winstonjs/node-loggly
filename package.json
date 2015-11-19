@@ -5,7 +5,7 @@
   "author": "Charlie Robbins <charlie.robbins@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "http://github.com/nodejitsu/node-loggly.git"
+    "url": "http://github.com/winstonjs/node-loggly.git"
   },
   "keywords": [
     "cloud computing",
@@ -24,7 +24,7 @@
   },
   "main": "./lib/loggly",
   "scripts": {
-    "pretest": "common lib/",
+    "pretest": "common lib/**/*.js lib/*.js test/helpers.js",
     "test": "vows test/*-test.js --spec"
   },
   "license": "MIT",

@@ -3,20 +3,21 @@ language: node_js
 node_js:
   - "0.10"
   - "0.12"
-  - "4.1"
+  - "4.2.2"
 
 before_install:
   - travis_retry npm install -g npm@2.14.5
   - travis_retry npm install
+  - >
+    openssl aes-256-cbc
+      -K $encrypted_4fb8e306b739_key
+      -iv $encrypted_4fb8e306b739_iv
+      -in test/config.json.enc
+      -out test/config.json -d
 
 script:
   - npm test
 
 matrix:
   allow_failures:
-    - node_js: "0.12"
-
-notifications:
-  email:
-    - travis@nodejitsu.com
-  irc: "irc.freenode.org#nodejitsu"
+    - node_js: "0.10"

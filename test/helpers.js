@@ -26,25 +26,17 @@ helpers.validConfig = function (config) {
 
 helpers.loadConfig = function () {
   try {
-    var configFile = path.join(__dirname, 'data', 'test-config.json'),
-        stats = fs.statSync(configFile)
-        config = JSON.parse(fs.readFileSync(configFile).toString());
-
+    var config = require('./config');
     if (!helpers.validConfig(config)) {
-      util.puts('Config file test-config.json must be updated with valid data before running tests');
-      process.exit(0);
+      throw new Error(util.format('test/config.json: invalid data %j', config));
     }
 
-    helpers.config = config || {}
-    return config || {};
+    helpers.config = config || {};
+    return helpers.config;
   }
   catch (ex) {
-    util.puts('Error parsing test-config.json');
-    ex.stack.split('\n').forEach(function (line) {
-      console.log(line);
-    });
-
-    process.exit(0);
+    console.log('Error parsing test/config.json');
+    throw ex;
   }
 };
 
