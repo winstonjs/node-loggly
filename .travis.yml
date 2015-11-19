@@ -8,7 +8,7 @@ node_js:
 before_install:
   - travis_retry npm install -g npm@2.14.5
   - travis_retry npm install
-  - >
+  - |
     openssl aes-256-cbc
       -K $encrypted_4fb8e306b739_key
       -iv $encrypted_4fb8e306b739_iv
