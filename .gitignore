@@ -1,4 +1,3 @@
-test/data
-test/data/*
+test/*.json
 node_modules
 npm-debug.log
